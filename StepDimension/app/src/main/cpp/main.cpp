@@ -134,13 +134,11 @@ int main(int argc, char *argv[])
     text.setFillColor(sf::Color::Black);
     text.setPosition(10, 10);
 
-    // Loading canary.wav fails for me for now; haven't had time to test why
-
-    /*sf::Music music;
+    sf::Music music;
     if(!music.openFromFile("canary.wav"))
         return EXIT_FAILURE;
 
-    music.play();*/
+    music.play();
 
     sf::View view = window.getDefaultView();
 

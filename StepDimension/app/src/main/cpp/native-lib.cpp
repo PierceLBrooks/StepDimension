@@ -4,12 +4,6 @@
 extern "C" {
 #endif
 
-JNIEXPORT jstring JNICALL
-Java_com_ssugamejam_stepdimension_SFMLActivity_stringFromJNI(JNIEnv *env, jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
-}
-
 JavaVM *gJvm = nullptr;
 static jobject gClassLoader;
 static jmethodID gFindClassMethod;
@@ -52,6 +46,11 @@ JNIEnv *getEnv() {
 
 JavaVM *getJvm() {
     return gJvm;
+}
+
+JNIEXPORT jstring JNICALL Java_com_ssugamejam_stepdimension_SFMLActivity_stringFromJNI(JNIEnv *env, jobject /* this */) {
+    std::string hello = "Hello from C++";
+    return env->NewStringUTF(hello.c_str());
 }
 
 #ifdef __cplusplus

@@ -58,6 +58,7 @@ public class SFMLActivity extends NativeActivity {
 
     private void commonOnCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         loadLibraries();
+        Log.d(TAG, stringFromJNI());
     }
 
     private static void loadLibrary(String library) {
@@ -76,6 +77,7 @@ public class SFMLActivity extends NativeActivity {
     }
 
     private static void loadLibraries() {
+        loadLibrary("openal", false);
         loadLibrary("sfml-system");
         loadLibrary("sfml-window");
         loadLibrary("sfml-audio");
