@@ -5,12 +5,15 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+include(ndk-stl-config.cmake)
+
 # Export ANativeActivity_onCreate(),
 # Refer to: https://github.com/android-ndk/ndk/issues/381.
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -u ANativeActivity_onCreate")
 
 message(STATUS "ABI ${ANDROID_ABI}")
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../SFML/SFML/include)
 #link_directories(${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI})
 
@@ -26,7 +29,9 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/main.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/native-lib.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/native-lib.hpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -49,7 +54,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-system.so )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-system-d.so )
 
 add_library(sfml-activity SHARED IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -59,7 +64,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-activity.so )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-activity-d.so )
 
 add_library(sfml-audio SHARED IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -69,7 +74,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-audio.so )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-audio-d.so )
 
 add_library(sfml-window SHARED IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -79,7 +84,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-window.so )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-window-d.so )
 
 add_library(sfml-graphics SHARED IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -89,7 +94,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-graphics.so )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-graphics-d.so )
 
 add_library(sfml-network SHARED IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -99,7 +104,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-network.so )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-network-d.so )
 
 add_library(sfml-main STATIC IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -109,7 +114,7 @@ set_target_properties( # Specifies the target library.
         PROPERTIES IMPORTED_LOCATION
 
         # Provides the path to the library you want to import.
-        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-main.a )
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-main-d.a )
 
 add_library(openal SHARED IMPORTED)
 set_target_properties( # Specifies the target library.

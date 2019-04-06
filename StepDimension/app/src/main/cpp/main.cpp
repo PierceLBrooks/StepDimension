@@ -4,11 +4,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-// Do we want to showcase direct JNI/NDK interaction?
-// Undefine this to get real cross-platform code.
-#define USE_JNI
-
-#if defined(USE_JNI)
 // These headers are only needed for direct NDK/JDK interaction
 #include <jni.h>
 #include <android/native_activity.h>
@@ -17,29 +12,46 @@
 // extra header here:
 #include <SFML/System/NativeActivity.hpp>
 
+#include "native-lib.hpp"
+
 // NDK/JNI sub example - call Java code from native code
 int vibrate(sf::Time duration)
 {
     // First we'll need the native activity handle
     ANativeActivity *activity = sf::getNativeActivity();
     
-    // Retrieve the JVM and JNI environment
-    JavaVM* vm = activity->vm;
-    JNIEnv* env = activity->env;
+    // Retrieve the JNI environment
+    JNIEnv* env = getEnv();
 
-    // First, attach this thread to the main thread
-    JavaVMAttachArgs attachargs;
-    attachargs.version = JNI_VERSION_1_6;
-    attachargs.name = "NativeThread";
-    attachargs.group = NULL;
-    jint res = vm->AttachCurrentThread(&env, &attachargs);
+    JavaVM* jvm;
+    env->GetJavaVM(&jvm);
 
-    if (res == JNI_ERR)
+    JNIEnv* myNewEnv; // as the code to run might be in a different thread (connections to signals for example) we will have a 'new one'
+    JavaVMAttachArgs jvmArgs;
+    jvmArgs.version = JNI_VERSION_1_6;
+
+    int attachedHere = 0; // know if detaching at the end is necessary
+    jint res = jvm->GetEnv((void**)&myNewEnv, JNI_VERSION_1_6); // checks if current env needs attaching or it is already attached
+    if (JNI_EDETACHED == res) {
+        // Supported but not attached yet, needs to call AttachCurrentThread
+        res = jvm->AttachCurrentThread(reinterpret_cast<JNIEnv **>(&myNewEnv), &jvmArgs);
+        if (JNI_OK == res) {
+            attachedHere = 1;
+        } else {
+            // Failed to attach, cancel
+            return EXIT_FAILURE;
+        }
+    } else if (JNI_OK == res) {
+        // Current thread already attached, do not attach 'again' (just to save the attachedHere flag)
+        // We make sure to keep attachedHere = 0
+    } else {
+        // JNI_EVERSION, specified version is not supported cancel this..
         return EXIT_FAILURE;
+    }
 
     // Retrieve class information
-    jclass natact = env->FindClass("android/app/NativeActivity");
-    jclass context = env->FindClass("android/content/Context");
+    jclass natact = findClassWithEnv(env, "com/ssugamejam/stepdimension/SFMLActivity");
+    jclass context = findClassWithEnv(env, "com/ssugamejam/stepdimension/SFMLActivity");
     
     // Get the value of a constant
     jfieldID fid = env->GetStaticFieldID(context, "VIBRATOR_SERVICE", "Ljava/lang/String;");
@@ -65,17 +77,39 @@ int vibrate(sf::Time duration)
     env->DeleteLocalRef(svcstr);
     env->DeleteLocalRef(context);
     env->DeleteLocalRef(natact);
-    
-    // Detach thread again
-    vm->DetachCurrentThread();
+
+    if (attachedHere) { // Key check
+        jvm->DetachCurrentThread(); // Done only when attachment was done here
+    }
+
+    return EXIT_SUCCESS;
 }
-#endif
 
 // This is the actual Android example. You don't have to write any platform
 // specific code, unless you want to use things not directly exposed.
 // ('vibrate()' in this example; undefine 'USE_JNI' above to disable it)
 int main(int argc, char *argv[])
 {
+    // First we'll need the native activity handle
+    ANativeActivity *activity = sf::getNativeActivity();
+
+    // Retrieve the JVM
+    JavaVM* vm = getJvm();
+
+    // Retrieve the JNI environment
+    JNIEnv* env = getEnv();
+
+    // First, attach this thread to the main thread
+    JavaVMAttachArgs attachargs;
+    attachargs.version = JNI_VERSION_1_6;
+    attachargs.name = "NativeThread";
+    attachargs.group = NULL;
+
+    jint res = vm->AttachCurrentThread(&env, NULL);
+
+    if (res == JNI_ERR)
+        return EXIT_FAILURE;
+
     sf::VideoMode screen(sf::VideoMode::getDesktopMode());
 
     sf::RenderWindow window(screen, "");
@@ -153,9 +187,7 @@ int main(int argc, char *argv[])
                     if (event.touch.finger == 0)
                     {
                         image.setPosition(event.touch.x, event.touch.y);
-#if defined(USE_JNI)
                         vibrate(sf::milliseconds(10));
-#endif
                     }
                     break;
             }
@@ -172,4 +204,9 @@ int main(int argc, char *argv[])
             sf::sleep(sf::milliseconds(100));
         }
     }
+
+    // Detach thread again
+    vm->DetachCurrentThread();
+
+    return EXIT_SUCCESS;
 }
