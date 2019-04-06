@@ -41,6 +41,17 @@ public class SFMLActivity extends NativeActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+
+    @Override
     protected void finalize() throws Throwable {
         super.finalize();
     }
