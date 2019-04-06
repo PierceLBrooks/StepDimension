@@ -5,6 +5,15 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+# Export ANativeActivity_onCreate(),
+# Refer to: https://github.com/android-ndk/ndk/issues/381.
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -u ANativeActivity_onCreate")
+
+message(STATUS "ABI ${ANDROID_ABI}")
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../SFML/SFML/include)
+#link_directories(${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI})
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -17,7 +26,7 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        src/main/cpp/native-lib.cpp)
+        src/main/cpp/main.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -32,6 +41,86 @@ find_library( # Sets the name of the path variable.
         # you want CMake to locate.
         log)
 
+add_library(sfml-system SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-system
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-system.so )
+
+add_library(sfml-activity SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-activity
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-activity.so )
+
+add_library(sfml-audio SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-audio
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-audio.so )
+
+add_library(sfml-window SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-window
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-window.so )
+
+add_library(sfml-graphics SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-graphics
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-graphics.so )
+
+add_library(sfml-network SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-network
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-network.so )
+
+add_library(sfml-main STATIC IMPORTED)
+set_target_properties( # Specifies the target library.
+        sfml-main
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libsfml-main.a )
+
+add_library(openal SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        openal
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libopenal.so )
+
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
@@ -41,4 +130,20 @@ target_link_libraries( # Specifies the target library.
 
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib})
+
+        log
+        android
+        EGL
+        GLESv1_CM
+
+        sfml-system
+
+        openal
+
+        sfml-window
+        sfml-audio
+        sfml-graphics
+        sfml-network
+        sfml-activity
+        -Wl,--whole-archive sfml-main -Wl,--no-whole-archive
+        )

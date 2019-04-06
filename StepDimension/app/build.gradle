@@ -12,7 +12,16 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags ""
+                cFlags ""
             }
+        }
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['jniLibs']
         }
     }
     buildTypes {
