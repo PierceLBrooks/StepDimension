@@ -15,7 +15,8 @@
         android:hasCode="true"
         android:name=".StepDimension">
         <activity
-            android:name=".SFMLActivity">
+            android:name=".SFMLActivity"
+            android:screenOrientation="landscape">
             <meta-data android:name="android.app.lib_name" android:value="sfml-activity-d" />
             <meta-data android:name="sfml.app.lib_name" android:value="native-lib" />
             <intent-filter>

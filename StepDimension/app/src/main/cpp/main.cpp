@@ -14,40 +14,54 @@
 
 #include "native-lib.hpp"
 
-// NDK/JNI sub example - call Java code from native code
-int vibrate(sf::Time duration)
+int attach(JavaVM** jvm, JNIEnv** env)
 {
-    // First we'll need the native activity handle
-    ANativeActivity *activity = sf::getNativeActivity();
-    
-    // Retrieve the JNI environment
-    JNIEnv* env = getEnv();
-
-    JavaVM* jvm;
-    env->GetJavaVM(&jvm);
+    (*env)->GetJavaVM(jvm);
 
     JNIEnv* myNewEnv; // as the code to run might be in a different thread (connections to signals for example) we will have a 'new one'
     JavaVMAttachArgs jvmArgs;
     jvmArgs.version = JNI_VERSION_1_6;
 
     int attachedHere = 0; // know if detaching at the end is necessary
-    jint res = jvm->GetEnv((void**)&myNewEnv, JNI_VERSION_1_6); // checks if current env needs attaching or it is already attached
+    jint res = (*jvm)->GetEnv((void**)&myNewEnv, JNI_VERSION_1_6); // checks if current env needs attaching or it is already attached
     if (JNI_EDETACHED == res) {
         // Supported but not attached yet, needs to call AttachCurrentThread
-        res = jvm->AttachCurrentThread(reinterpret_cast<JNIEnv **>(&myNewEnv), &jvmArgs);
+        res = (*jvm)->AttachCurrentThread(reinterpret_cast<JNIEnv **>(&myNewEnv), &jvmArgs);
         if (JNI_OK == res) {
             attachedHere = 1;
         } else {
             // Failed to attach, cancel
-            return EXIT_FAILURE;
+            return attachedHere;
         }
     } else if (JNI_OK == res) {
         // Current thread already attached, do not attach 'again' (just to save the attachedHere flag)
         // We make sure to keep attachedHere = 0
     } else {
         // JNI_EVERSION, specified version is not supported cancel this..
-        return EXIT_FAILURE;
+        return attachedHere;
     }
+
+    *env = myNewEnv;
+
+    return attachedHere;
+}
+
+int detach(JavaVM* jvm, int attachedHere)
+{
+    if (attachedHere) { // Key check
+        jvm->DetachCurrentThread(); // Done only when attachment was done here
+    }
+    return EXIT_SUCCESS;
+}
+
+int vibrate(sf::Time duration)
+{
+    // First we'll need the native activity handle
+    ANativeActivity *activity = sf::getNativeActivity();
+
+    JavaVM* jvm;
+    JNIEnv* env = getEnv();
+    int attachedHere = attach(&jvm, &env);
 
     // Retrieve class information
     jclass natact = findClassWithEnv(env, "com/ssugamejam/stepdimension/SFMLActivity");
@@ -78,9 +92,7 @@ int vibrate(sf::Time duration)
     env->DeleteLocalRef(context);
     env->DeleteLocalRef(natact);
 
-    if (attachedHere) { // Key check
-        jvm->DetachCurrentThread(); // Done only when attachment was done here
-    }
+    detach(jvm, attachedHere);
 
     return EXIT_SUCCESS;
 }
@@ -90,20 +102,11 @@ int vibrate(sf::Time duration)
 // ('vibrate()' in this example; undefine 'USE_JNI' above to disable it)
 int main(int argc, char *argv[])
 {
-    // First we'll need the native activity handle
-    ANativeActivity *activity = sf::getNativeActivity();
-
     // Retrieve the JVM
     JavaVM* vm = getJvm();
 
     // Retrieve the JNI environment
     JNIEnv* env = getEnv();
-
-    // First, attach this thread to the main thread
-    JavaVMAttachArgs attachargs;
-    attachargs.version = JNI_VERSION_1_6;
-    attachargs.name = "NativeThread";
-    attachargs.group = NULL;
 
     jint res = vm->AttachCurrentThread(&env, NULL);
 
