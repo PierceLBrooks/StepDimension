@@ -19,11 +19,8 @@ public class SFMLActivity extends NativeActivity {
     private static final String TAG = "SFML";
     private static final String VIBRATOR_SERVICE = Context.VIBRATOR_SERVICE;
 
-    private Audio audio;
-
     public SFMLActivity() {
         super();
-        audio = null;
     }
 
     @Override
@@ -40,22 +37,12 @@ public class SFMLActivity extends NativeActivity {
 
     @Override
     protected void onDestroy() {
-        ///*
-        audio.pause();
-        audio.death();
-        audio = null;
-        //*/
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ///*
-        audio = new Audio(getApplicationContext());
-        audio.birth("orchestral.ogg");
-        audio.play();
-        //*/
     }
 
     @Override
