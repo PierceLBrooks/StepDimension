@@ -48,7 +48,7 @@ public class SFMLActivity extends NativeActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        finish();
+        //finish();
     }
 
     @Override

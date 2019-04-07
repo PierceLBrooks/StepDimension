@@ -134,12 +134,6 @@ int main(int argc, char *argv[])
     text.setFillColor(sf::Color::Black);
     text.setPosition(10, 10);
 
-    sf::Music music;
-    if(!music.openFromFile("canary.wav"))
-        return EXIT_FAILURE;
-
-    music.play();
-
     sf::View view = window.getDefaultView();
 
     sf::Color background = sf::Color::White;
@@ -175,7 +169,6 @@ int main(int argc, char *argv[])
                 case sf::Event::GainedFocus:
                     background = sf::Color::White;
                     break;
-                
                 // On Android MouseLeft/MouseEntered are (for now) triggered,
                 // whenever the app loses or gains focus.
                 case sf::Event::MouseLeft:
@@ -194,14 +187,12 @@ int main(int argc, char *argv[])
             }
         }
 
-        if (active)
-        {
+        if (active) {
             window.clear(background);
             window.draw(image);
             window.draw(text);
             window.display();
-        }
-        else {
+        } else {
             sf::sleep(sf::milliseconds(100));
         }
     }
