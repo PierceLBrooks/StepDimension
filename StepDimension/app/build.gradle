@@ -12,8 +12,8 @@ android {
         //multiDexEnabled true
         externalNativeBuild {
             cmake {
-                cppFlags ""
-                cFlags ""
+                cppFlags "-std=c++11 -fno-exceptions"
+                cFlags "-fno-exceptions"
                 arguments '-DANDROID_STL=c++_shared'
             }
         }

@@ -15,6 +15,7 @@ message(STATUS "ABI ${ANDROID_ABI}")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../SFML/SFML/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../IDCP/IDCP/inc)
 #link_directories(${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI})
 
 # Creates and names a library, sets it as either STATIC
@@ -49,6 +50,16 @@ find_library( # Sets the name of the path variable.
         # Specifies the name of the NDK library that
         # you want CMake to locate.
         log)
+
+add_library(idcp SHARED IMPORTED)
+set_target_properties( # Specifies the target library.
+        idcp
+
+        # Specifies the parameter you want to define.
+        PROPERTIES IMPORTED_LOCATION
+
+        # Provides the path to the library you want to import.
+        ${CMAKE_CURRENT_SOURCE_DIR}/jniLibs/${ANDROID_ABI}/libIDCP.so )
 
 add_library(sfml-system SHARED IMPORTED)
 set_target_properties( # Specifies the target library.
@@ -139,6 +150,8 @@ target_link_libraries( # Specifies the target library.
 
         # Links the target library to the log library
         # included in the NDK.
+
+        idcp
 
         log
         android

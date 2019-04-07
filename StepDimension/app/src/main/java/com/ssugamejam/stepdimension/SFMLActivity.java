@@ -116,6 +116,7 @@ public class SFMLActivity extends NativeActivity implements Lock {
     }
 
     private static void loadLibraries() {
+        loadLibrary("IDCP", false);
         loadLibrary("openal", false);
         loadLibrary("sfml-system");
         loadLibrary("sfml-window");
