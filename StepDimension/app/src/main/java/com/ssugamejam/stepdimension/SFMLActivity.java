@@ -5,6 +5,8 @@ package com.ssugamejam.stepdimension;
 
 import android.app.NativeActivity;
 import android.content.Context;
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -19,8 +21,11 @@ public class SFMLActivity extends NativeActivity {
     private static final String TAG = "SFML";
     private static final String VIBRATOR_SERVICE = Context.VIBRATOR_SERVICE;
 
+    private Audio audio;
+
     public SFMLActivity() {
         super();
+        audio = null;
     }
 
     @Override
@@ -37,18 +42,24 @@ public class SFMLActivity extends NativeActivity {
 
     @Override
     protected void onDestroy() {
+        audio.pause();
+        audio.death();
+        audio = null;
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        audio = new Audio(getApplicationContext());
+        audio.birth("orchestral.ogg");
+        audio.play();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        finish();
+        //finish();
     }
 
     @Override
@@ -59,6 +70,15 @@ public class SFMLActivity extends NativeActivity {
     private void commonOnCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         loadLibraries();
         Log.d(TAG, stringFromJNI());
+
+        for (int i = 0; i != MediaCodecList.getCodecCount(); ++i) {
+            MediaCodecInfo info = MediaCodecList.getCodecInfoAt(i);
+            String[] types = info.getSupportedTypes();
+            for (int j = 0; j != types.length; ++j) {
+                MediaCodecInfo.CodecCapabilities capabilities = info.getCapabilitiesForType(types[j]);
+                Log.d(TAG, info.getName()+" @ "+i+" ? "+types[j]+" = "+capabilities.getMimeType());
+            }
+        }
     }
 
     private static void loadLibrary(String library) {

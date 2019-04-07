@@ -1,0 +1,211 @@
+
+04/06 19:40:46: Launching app
+$ adb push E:\UserData\Programming\Android\StepDimension\StepDimension\app\build\outputs\apk\debug\app-debug.apk /data/local/tmp/com.ssugamejam.stepdimension
+$ adb shell pm install -t -r "/data/local/tmp/com.ssugamejam.stepdimension"
+Success
+APK installed in 13 s 961 ms
+$ adb shell am start -n "com.ssugamejam.stepdimension/com.ssugamejam.stepdimension.SFMLActivity" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER
+Client not ready yet..Waiting for process to come online
+Connected to process 20175 on device samsung-sm_j337a-4200171edaecc47f
+Capturing and displaying logcat messages from application. This behavior can be disabled in the "Logcat output" section of the "Debugger" settings page.
+D/TimaKeyStoreProvider: TimaKeyStore is not enabled: cannot add TimaSignature Service and generateKeyPair Service
+D/ActivityThread: Added TimaKeyStore provider
+I/zygote: no shared libraies, dex_files: 1
+D/SFML: loadLibrary openal
+W/linker: "/data/app/com.ssugamejam.stepdimension-GW5adHOzC-XZKH05iOychA==/lib/arm/libopenal.so" unused DT entry: type 0xf arg 0x19ab
+D/SFML: loadLibrary sfml-system
+D/SFML: loadLibrary sfml-window
+D/SFML: loadLibrary sfml-audio
+D/SFML: loadLibrary sfml-graphics
+D/SFML: loadLibrary sfml-network
+D/SFML: loadLibrary sfml-activity
+D/SFML: loadLibrary native-lib
+D/SFML: loadLibrary openal
+D/SFML: loadLibrary sfml-system
+D/SFML: loadLibrary sfml-window
+    loadLibrary sfml-audio
+D/SFML: loadLibrary sfml-graphics
+D/SFML: loadLibrary sfml-network
+    loadLibrary sfml-activity
+D/SFML: loadLibrary native-lib
+D/SFML: Hello from C++
+W/AudioCapabilities: Unsupported mime audio/mpeg-L1
+W/AudioCapabilities: Unsupported mime audio/mpeg-L2
+W/AudioCapabilities: Unsupported mime audio/x-ms-wma
+W/AudioCapabilities: Unsupported mime audio/x-ima
+W/AudioCapabilities: Unsupported mime audio/ac4
+W/VideoCapabilities: Unrecognized profile 2130706433 for video/avc
+    Unrecognized profile 2130706434 for video/avc
+W/VideoCapabilities: Unrecognized profile 2130706433 for video/avc
+    Unrecognized profile 2130706434 for video/avc
+W/VideoCapabilities: Unsupported mime video/wvc1
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv
+W/VideoCapabilities: Unrecognized profile 2130706433 for video/avc
+    Unrecognized profile 2130706434 for video/avc
+I/VideoCapabilities: Unsupported profile 4 for video/mp4v-es
+W/VideoCapabilities: Unrecognized profile/level 1/32 for video/mp4v-es
+W/VideoCapabilities: Unrecognized profile/level 32768/2 for video/mp4v-es
+    Unrecognized profile/level 32768/64 for video/mp4v-es
+W/VideoCapabilities: Unsupported mime video/wvc1
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv7
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv8
+W/VideoCapabilities: Unsupported mime video/mp43
+D/SFML: OMX.SEC.amr.dec @ 0 ? audio/3gpp = audio/3gpp
+D/SFML: OMX.SEC.amr.dec @ 0 ? audio/amr-wb = audio/amr-wb
+D/SFML: OMX.SEC.mp3.dec @ 1 ? audio/mpeg = audio/mpeg
+W/AudioCapabilities: Unsupported mime audio/mpeg-L1
+D/SFML: OMX.SEC.mp3.dec @ 1 ? audio/mpeg-L1 = audio/mpeg-L1
+W/AudioCapabilities: Unsupported mime audio/mpeg-L2
+D/SFML: OMX.SEC.mp3.dec @ 1 ? audio/mpeg-L2 = audio/mpeg-L2
+D/SFML: OMX.SEC.flac.dec @ 2 ? audio/flac = audio/flac
+W/AudioCapabilities: Unsupported mime audio/x-ms-wma
+D/SFML: OMX.SEC.wma.dec @ 3 ? audio/x-ms-wma = audio/x-ms-wma
+W/AudioCapabilities: Unsupported mime audio/x-ima
+D/SFML: OMX.SEC.adpcm.dec @ 4 ? audio/x-ima = audio/x-ima
+D/SFML: OMX.dolby.ac3.decoder @ 5 ? audio/ac3 = audio/ac3
+D/SFML: OMX.dolby.eac3.decoder @ 6 ? audio/eac3 = audio/eac3
+D/SFML: OMX.dolby.eac3_joc.decoder @ 7 ? audio/eac3-joc = audio/eac3-joc
+W/AudioCapabilities: Unsupported mime audio/ac4
+D/SFML: OMX.dolby.ac4.decoder @ 8 ? audio/ac4 = audio/ac4
+D/SFML: OMX.Exynos.mpeg4.dec @ 9 ? video/mp4v-es = video/mp4v-es
+D/SFML: OMX.Exynos.h263.dec @ 10 ? video/3gpp = video/3gpp
+W/VideoCapabilities: Unrecognized profile 2130706433 for video/avc
+    Unrecognized profile 2130706434 for video/avc
+D/SFML: OMX.Exynos.avc.dec @ 11 ? video/avc = video/avc
+W/VideoCapabilities: Unsupported mime video/wvc1
+D/SFML: OMX.Exynos.vc1.dec @ 12 ? video/wvc1 = video/wvc1
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv
+D/SFML: OMX.Exynos.vc1.dec @ 12 ? video/x-ms-wmv = video/x-ms-wmv
+D/SFML: OMX.Exynos.vp8.dec @ 13 ? video/x-vnd.on2.vp8 = video/x-vnd.on2.vp8
+D/SFML: OMX.Exynos.hevc.dec @ 14 ? video/hevc = video/hevc
+W/VideoCapabilities: Unrecognized profile 2130706433 for video/avc
+    Unrecognized profile 2130706434 for video/avc
+D/SFML: OMX.Exynos.AVC.Encoder @ 15 ? video/avc = video/avc
+D/SFML: OMX.Exynos.H263.Encoder @ 16 ? video/3gpp = video/3gpp
+D/SFML: OMX.Exynos.MPEG4.Encoder @ 17 ? video/mp4v-es = video/mp4v-es
+D/SFML: OMX.Exynos.VP8.Encoder @ 18 ? video/x-vnd.on2.vp8 = video/x-vnd.on2.vp8
+D/SFML: OMX.Exynos.HEVC.Encoder @ 19 ? video/hevc = video/hevc
+D/SFML: OMX.google.mpeg4.decoder @ 20 ? video/mp4v-es = video/mp4v-es
+D/SFML: OMX.google.h263.decoder @ 21 ? video/3gpp = video/3gpp
+D/SFML: OMX.google.h264.decoder @ 22 ? video/avc = video/avc
+D/SFML: OMX.google.hevc.decoder @ 23 ? video/hevc = video/hevc
+D/SFML: OMX.google.vp8.decoder @ 24 ? video/x-vnd.on2.vp8 = video/x-vnd.on2.vp8
+D/SFML: OMX.google.vp9.decoder @ 25 ? video/x-vnd.on2.vp9 = video/x-vnd.on2.vp9
+D/SFML: OMX.google.h263.encoder @ 26 ? video/3gpp = video/3gpp
+D/SFML: OMX.google.h264.encoder @ 27 ? video/avc = video/avc
+I/VideoCapabilities: Unsupported profile 4 for video/mp4v-es
+D/SFML: OMX.google.mpeg4.encoder @ 28 ? video/mp4v-es = video/mp4v-es
+D/SFML: OMX.google.vp8.encoder @ 29 ? video/x-vnd.on2.vp8 = video/x-vnd.on2.vp8
+D/SFML: OMX.google.vp9.encoder @ 30 ? video/x-vnd.on2.vp9 = video/x-vnd.on2.vp9
+D/SFML: OMX.google.mp3.decoder @ 31 ? audio/mpeg = audio/mpeg
+D/SFML: OMX.google.amrnb.decoder @ 32 ? audio/3gpp = audio/3gpp
+D/SFML: OMX.google.amrwb.decoder @ 33 ? audio/amr-wb = audio/amr-wb
+D/SFML: OMX.google.aac.decoder @ 34 ? audio/mp4a-latm = audio/mp4a-latm
+D/SFML: OMX.google.g711.alaw.decoder @ 35 ? audio/g711-alaw = audio/g711-alaw
+D/SFML: OMX.google.g711.mlaw.decoder @ 36 ? audio/g711-mlaw = audio/g711-mlaw
+D/SFML: OMX.google.vorbis.decoder @ 37 ? audio/vorbis = audio/vorbis
+D/SFML: OMX.google.opus.decoder @ 38 ? audio/opus = audio/opus
+D/SFML: OMX.google.raw.decoder @ 39 ? audio/raw = audio/raw
+D/SFML: OMX.google.aac.encoder @ 40 ? audio/mp4a-latm = audio/mp4a-latm
+D/SFML: OMX.google.amrnb.encoder @ 41 ? audio/3gpp = audio/3gpp
+D/SFML: OMX.google.amrwb.encoder @ 42 ? audio/amr-wb = audio/amr-wb
+D/SFML: OMX.google.flac.encoder @ 43 ? audio/flac = audio/flac
+D/SFML: OMX.google.gsm.decoder @ 44 ? audio/gsm = audio/gsm
+D/SFML: OMX.SEC.h263.sw.dec @ 45 ? video/3gpp = video/3gpp
+D/SFML: OMX.SEC.avc.sw.dec @ 46 ? video/avc = video/avc
+W/VideoCapabilities: Unrecognized profile/level 1/32 for video/mp4v-es
+    Unrecognized profile/level 32768/2 for video/mp4v-es
+    Unrecognized profile/level 32768/64 for video/mp4v-es
+D/SFML: OMX.SEC.mpeg4.sw.dec @ 47 ? video/mp4v-es = video/mp4v-es
+W/VideoCapabilities: Unsupported mime video/wvc1
+D/SFML: OMX.SEC.vc1.sw.dec @ 48 ? video/wvc1 = video/wvc1
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv
+D/SFML: OMX.SEC.vc1.sw.dec @ 48 ? video/x-ms-wmv = video/x-ms-wmv
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv7
+D/SFML: OMX.SEC.wmv7.dec @ 49 ? video/x-ms-wmv7 = video/x-ms-wmv7
+W/VideoCapabilities: Unsupported mime video/x-ms-wmv8
+D/SFML: OMX.SEC.wmv8.dec @ 50 ? video/x-ms-wmv8 = video/x-ms-wmv8
+W/VideoCapabilities: Unsupported mime video/mp43
+D/SFML: OMX.SEC.mp43.dec @ 51 ? video/mp43 = video/mp43
+D/SFML: OMX.SEC.vp8.dec @ 52 ? video/x-vnd.on2.vp8 = video/x-vnd.on2.vp8
+D/SFML: OMX.SEC.hevc.sw.dec @ 53 ? video/hevc = video/hevc
+D/SFML: OMX.SEC.aac.dec @ 54 ? audio/mp4a-latm = audio/mp4a-latm
+D/SFML: OMX.SEC.naac.enc @ 55 ? audio/mp4a-latm = audio/mp4a-latm
+I/zygote: Do partial code cache collection, code=31KB, data=29KB
+I/zygote: After code cache collection, code=31KB, data=29KB
+    Increasing code cache capacity to 128KB
+E/libEGL: call to OpenGL ES API with no current context (logged once per thread)
+I/sfml-error: Warning: The created OpenGL context does not fully meet the settings that were requested
+    Requested: version = 1.1 ; depth bits = 0 ; stencil bits = 0 ; AA level = 0 ; core = false ; debug = false ; sRGB = false
+    Created: version = 0.0 ; depth bits = 0 ; stencil bits = 0 ; AA level = 0 ; core = false ; debug = false ; sRGB = false
+    Failed to activate the window's context
+    Failed to activate the window's context
+    Failed to load image from stream. Reason: Image not of any known type, or corrupt
+D/IDC: onActivityCreated SFML
+D/IDC: onActivityStarted SFML
+D/IDC: onActivityResumed SFML
+W/System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'int java.lang.Integer.intValue()' on a null object reference
+W/System.err:     at android.media.MediaFormat.getInteger(MediaFormat.java:854)
+        at com.ssugamejam.stepdimension.Audio$Track.getTrack(Audio.java:224)
+W/System.err:     at com.ssugamejam.stepdimension.Audio$Track.birth(Audio.java:67)
+        at com.ssugamejam.stepdimension.Audio.birth(Audio.java:326)
+        at com.ssugamejam.stepdimension.SFMLActivity.onResume(SFMLActivity.java:55)
+        at android.app.Instrumentation.callActivityOnResume(Instrumentation.java:1361)
+        at android.app.Activity.performResume(Activity.java:7352)
+W/System.err:     at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3765)
+        at android.app.ActivityThread.handleResumeActivity(ActivityThread.java:3830)
+        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3038)
+        at android.app.ActivityThread.-wrap11(Unknown Source:0)
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1696)
+        at android.os.Handler.dispatchMessage(Handler.java:105)
+W/System.err:     at android.os.Looper.loop(Looper.java:164)
+        at android.app.ActivityThread.main(ActivityThread.java:6944)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:327)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1374)
+W/System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.media.AudioTrack.pause()' on a null object reference
+        at com.ssugamejam.stepdimension.Audio$Track.pause(Audio.java:95)
+        at com.ssugamejam.stepdimension.Audio.play(Audio.java:376)
+W/System.err:     at com.ssugamejam.stepdimension.SFMLActivity.onResume(SFMLActivity.java:56)
+        at android.app.Instrumentation.callActivityOnResume(Instrumentation.java:1361)
+        at android.app.Activity.performResume(Activity.java:7352)
+        at android.app.ActivityThread.performResumeActivity(ActivityThread.java:3765)
+        at android.app.ActivityThread.handleResumeActivity(ActivityThread.java:3830)
+        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3038)
+W/System.err:     at android.app.ActivityThread.-wrap11(Unknown Source:0)
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1696)
+        at android.os.Handler.dispatchMessage(Handler.java:105)
+        at android.os.Looper.loop(Looper.java:164)
+        at android.app.ActivityThread.main(ActivityThread.java:6944)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:327)
+W/System.err:     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1374)
+D/ViewRootImpl@3dc8642[SFMLActivity]: setView = DecorView@ed97653[SFMLActivity] TM=true MM=false
+D/ViewRootImpl@3dc8642[SFMLActivity]: dispatchAttachedToWindow
+D/ViewRootImpl@3dc8642[SFMLActivity]: Relayout returned: old=[0,0][0,0] new=[0,0][1280,720] result=0x1 surface={valid=false 0} changed=false
+E/ViewRootImpl@3dc8642[SFMLActivity]: Surface is not valid.
+D/IDC: onActivityPaused SFML
+D/ViewRootImpl@3dc8642[SFMLActivity]: Relayout returned: old=[0,0][1280,720] new=[0,0][1280,720] result=0x1 surface={valid=false 0} changed=false
+D/IDC: onActivityStopped SFML
+W/System.err: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.media.AudioTrack.pause()' on a null object reference
+W/System.err:     at com.ssugamejam.stepdimension.Audio$Track.pause(Audio.java:95)
+W/System.err:     at com.ssugamejam.stepdimension.Audio.pause(Audio.java:398)
+W/System.err:     at com.ssugamejam.stepdimension.SFMLActivity.onDestroy(SFMLActivity.java:45)
+        at android.app.Activity.performDestroy(Activity.java:7470)
+        at android.app.Instrumentation.callActivityOnDestroy(Instrumentation.java:1255)
+        at android.app.ActivityThread.performDestroyActivity(ActivityThread.java:4592)
+W/System.err:     at android.app.ActivityThread.handleDestroyActivity(ActivityThread.java:4623)
+        at android.app.ActivityThread.-wrap5(Unknown Source:0)
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1757)
+W/System.err:     at android.os.Handler.dispatchMessage(Handler.java:105)
+        at android.os.Looper.loop(Looper.java:164)
+W/System.err:     at android.app.ActivityThread.main(ActivityThread.java:6944)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:327)
+W/System.err:     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1374)
+D/IDC: onActivityDestroyed SFML
+D/ViewRootImpl@3dc8642[SFMLActivity]: dispatchDetachedFromWindow
+D/InputEventReceiver: channel 'eccd8de com.ssugamejam.stepdimension/com.ssugamejam.stepdimension.SFMLActivity (client)' ~ Disposing input event receiver.
+    channel 'eccd8de com.ssugamejam.stepdimension/com.ssugamejam.stepdimension.SFMLActivity (client)' ~NativeInputEventReceiver.
+Application terminated.
