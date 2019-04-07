@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
     idc::StateMachine* menu = new idc::StateMachine();
-    menu->setState(LAUNCH_STATE);
+    LOGGER << "State: " << menu->setState(LAUNCH_STATE) << "\n";
 
     // Retrieve the JVM
     JavaVM* vm = getJvm();
@@ -21,22 +21,6 @@ int main(int argc, char *argv[])
 
     sf::RenderWindow window(screen, "");
     window.setFramerateLimit(30);
-
-    sf::Texture texture;
-    if(!texture.loadFromFile("image.png"))
-        return EXIT_FAILURE;
-
-    sf::Sprite image(texture);
-    image.setPosition(screen.width / 2, screen.height / 2);
-    image.setOrigin(texture.getSize().x/2, texture.getSize().y/2);
-
-    sf::Font font;
-    if (!font.loadFromFile("sansation.ttf"))
-        return EXIT_FAILURE;
-
-    sf::Text text("Tap anywhere to move the logo.", font, 64);
-    text.setFillColor(sf::Color::Black);
-    text.setPosition(10, 10);
 
     sf::View view = window.getDefaultView();
 
@@ -86,8 +70,8 @@ int main(int argc, char *argv[])
                 case sf::Event::TouchBegan:
                     if (event.touch.finger == 0)
                     {
-                        image.setPosition(event.touch.x, event.touch.y);
                         vibrate(sf::milliseconds(10));
+                        menu->select(&window, sf::Vector2f(sf::Vector2i(event.touch.x, event.touch.y)));
                     }
                     break;
             }
@@ -96,8 +80,6 @@ int main(int argc, char *argv[])
         if (active) {
             window.clear(background);
             menu->render(&window);
-            window.draw(image);
-            window.draw(text);
             window.display();
         } else {
             sf::sleep(sf::milliseconds(100));

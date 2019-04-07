@@ -23,25 +23,31 @@ namespace idc
             class Element
             {
                 public:
-                    Element(const std::string& path);
+                    Element(StateMachine* owner, const std::string& path, const std::string& text);
                     virtual ~Element();
                     sf::Sprite* visual;
                     sf::Texture* texture;
+                    sf::Text* label;
             };
             StateMachine();
             virtual ~StateMachine();
+            sf::Font* getFont() const;
             int getState() const;
-            void setState(int state);
+            bool setState(int state);
             void select(int element);
+            void select(sf::RenderWindow* window, const sf::Vector2f& cursor);
             void back();
             void render(sf::RenderWindow* window);
         private:
             void update();
+            static float getElementPosition(float bounds, float height, int index, int total);
             int state;
             std::vector<int> backStack;
             std::vector<Element*> elements;
             sf::Sprite* background;
             sf::Texture* backgroundTexture;
+            sf::Font* font;
+            sf::RectangleShape* backer;
     };
 }
 

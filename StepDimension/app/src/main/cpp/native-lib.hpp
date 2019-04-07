@@ -14,6 +14,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+#include "Log.hpp"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
