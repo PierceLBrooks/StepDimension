@@ -11,19 +11,53 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-public class SFMLActivity extends NativeActivity {
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class SFMLActivity extends NativeActivity implements Lock {
     static {
         loadLibraries();
     }
 
     private static final String TAG = "SFML";
     private static final String VIBRATOR_SERVICE = Context.VIBRATOR_SERVICE;
+    private static SFMLActivity self = null;
 
     private Audio audio;
+    private HashMap<Object, Boolean> flags;
+    private ReentrantLock lock;
 
     public SFMLActivity() {
         super();
         audio = null;
+        flags = new HashMap<Object, Boolean>();
+        lock = new ReentrantLock();
+        self = this;
+    }
+
+    public static SFMLActivity getSelf() {
+        return self;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        lock();
+        try
+        {
+            flags.put("BACK", true);
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            unlock();
+        }
     }
 
     @Override
@@ -40,18 +74,14 @@ public class SFMLActivity extends NativeActivity {
 
     @Override
     protected void onDestroy() {
-        audio.pause();
-        audio.death();
-        audio = null;
+        pause();
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        audio = new Audio(getApplicationContext());
-        audio.birth("sample.flac");
-        audio.play();
+
     }
 
     @Override
@@ -106,5 +136,75 @@ public class SFMLActivity extends NativeActivity {
     @Override
     public Object getSystemService(@NonNull String name) {
         return super.getSystemService(name);
+    }
+
+    public void play(String song) {
+        pause();
+        audio = new Audio(getApplicationContext());
+        audio.birth(song);
+        audio.play();
+    }
+
+    public void pause() {
+        if (audio == null) {
+            return;
+        }
+        audio.pause();
+        audio.death();
+        audio = null;
+    }
+
+    public boolean checkFlag(Object name)
+    {
+        boolean flag = false;
+        if (!flags.containsKey(name))
+        {
+            return flag;
+        }
+        lock();
+        try
+        {
+            flag = flags.get(name).booleanValue();
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            unlock();
+        }
+        flags.put(name, false);
+        return flag;
+    }
+
+    @Override
+    public void lock() {
+        lock.lock();
+    }
+
+    @Override
+    public void lockInterruptibly() throws InterruptedException {
+        lock.lockInterruptibly();
+    }
+
+    @Override
+    public boolean tryLock() {
+        return lock.tryLock();
+    }
+
+    @Override
+    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
+        return lock.tryLock(time, unit);
+    }
+
+    @Override
+    public void unlock() {
+        lock.unlock();
+    }
+
+    @Override
+    public Condition newCondition() {
+        return lock.newCondition();
     }
 }

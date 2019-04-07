@@ -31,7 +31,9 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/native-lib.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/native-lib.hpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/native-lib.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/StateMachine.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/main/cpp/StateMachine.hpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
